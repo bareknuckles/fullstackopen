@@ -27,6 +27,30 @@
                 Server->>Browser: main.js
                 Server-->>Browser: Authenticates GET requests and responds with requested files upon success
             </pre>
+
+            <h3>Single page app diagram:</h3>
+            <pre class="mermaid">
+                sequenceDiagram
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+                Server->>Browser: HTML-code
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+                Server->>Browser: main.css
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+                Server->>Browser: main.js
+                Server-->>Browser: Authenticates GET requests and responds with requested files upon success
+            </pre>
+
+            <h3>New note in Single page app diagram</h3>
+            <pre class="mermaid">
+                sequenceDiagram
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+                Server->>Browser: HTML-code
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+                Server->>Browser: main.css
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+                Server->>Browser: main.js
+                Server-->>Browser: Authenticates GET requests and responds with requested files upon success
+            </pre>
         </div>
     </main>
 
