@@ -15,11 +15,16 @@
             </h3>
             <pre class="mermaid">
                 sequenceDiagram
-                Browser/Web Client->>Server: HTTPS POST Request
-                Browser->>Server: POST to file path on server
-                Note right of Server: Authenticates POST Request
+                Browser/Web Client->>Server: HTTPS POST https://studies.cs.helsinki.fi/exampleapp/new_note
+                Server->>Server: Authenticates POST Request
+                Note right of Server: Server checks the request for action and method Upon success, a new note is made at the location on the server
                 Server-->>Browser: Accepts new note and reloads notes list
-                Browser->>Server: HTTPS GET request for css and js files
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+                Server->>Browser: HTML-code
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+                Server->>Browser: main.css
+                Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+                Server->>Browser: main.js
                 Server-->>Browser: Authenticates GET requests and responds with requested files upon success
             </pre>
         </div>
