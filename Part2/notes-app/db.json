@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "HTML is easy",
-      "important": true
+      "important": false
     },
     {
       "id": 2,
@@ -38,7 +38,7 @@
     {
       "id": 8,
       "content": "",
-      "important": false
+      "important": true
     },
     {
       "id": 9,
@@ -48,12 +48,12 @@
     {
       "id": 10,
       "content": "get",
-      "important": false
+      "important": true
     },
     {
       "id": 11,
       "content": "get",
-      "important": false
+      "important": true
     },
     {
       "id": 12,
@@ -63,6 +63,16 @@
     {
       "id": 13,
       "content": "get",
+      "important": false
+    },
+    {
+      "id": 14,
+      "content": "null",
+      "important": false
+    },
+    {
+      "id": 15,
+      "content": "null",
       "important": false
     }
   ]
