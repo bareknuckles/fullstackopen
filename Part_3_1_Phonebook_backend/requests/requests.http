@@ -1,0 +1,26 @@
+GET http://localhost:3001
+
+###
+
+GET http://localhost:/info
+
+###
+
+GET http://localhost:3001/api/persons
+
+###
+
+GET http://localhost:3001/persons/1
+
+###
+DELETE http://localhost:3001/persons/2
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Adam Lovelace",
+    "number": "0-500-22345"
+}

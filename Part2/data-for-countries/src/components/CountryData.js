@@ -1,3 +1,4 @@
+// CountryData.js
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -13,6 +14,7 @@ const CountryData = ({query, setCountries, setSelectedCountry}) => {
         axios
         .get(`https://restcountries.com/v2/name/${query}`)
         .then((response) => {
+            console.log('API Response:', response.data)
             if (response.data.length > 10) {
             setCountries([]);
             setSelectedCountry(null);
