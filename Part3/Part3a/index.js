@@ -1,6 +1,6 @@
 // const http = require('http');
 
-const express = require('express')
+import express, { json } from 'express'
 const app = express()
 const requestLogger = (request, response, next) => {
     console.log('Method:', request.method)
@@ -14,7 +14,7 @@ const unknownEndpoint = (request, response) => {
     })
 }
 
-app.use(express.json())
+app.use(json())
 app.use(requestLogger)
 app.use(unknownEndpoint)
 
