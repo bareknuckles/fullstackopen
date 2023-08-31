@@ -80,6 +80,8 @@ const App = () => {
       setNotes(notes.filter(n => n.id !== id))
     })
   }
+
+  
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
