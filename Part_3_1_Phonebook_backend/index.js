@@ -1,27 +1,29 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors =  require('cors')
 
 const app = express()
 
 // EXAMPLE MIDDLEWARE 001(USED BEFORE ROUTES)
-const requestLogger = (request, response, next) => {
-  console.log(`Method ${request.method}`)
-  console.log(`Path ${request.path}`)
-  console.log(`Body ${request.body}`)
-  console.log(`---`)
+// const requestLogger = (request, response, next) => {
+//   console.log(`Method ${request.method}`)
+//   console.log(`Path ${request.path}`)
+//   console.log(`Body ${request.body}`)
+//   console.log(`---`)
 
-  next()
-}
+//   next()
+// }
 
 // EXAMPLE MIDDLEWARE 002(USED AFTER ROUTES)
-const unknownEndpoint = (request, response) => {
-  response.status(400).send({error: 'Unknown Endpoint'})
-}
-
+// const unknownEndpoint = (request, response) => {
+//   response.status(400).send({error: 'Unknown Endpoint'})
+// }
+app.use(cors())
 app.use(express.json())
 app.use(morgan("tiny"))
 
-app.use(requestLogger)
+
+// app.use(requestLogger)
 
 morgan.token("payload", function (request, response){
   return JSON.stringify(request.body)
@@ -113,7 +115,7 @@ app.post("/api/persons", (request, response) => {
 })
 
 
-app.use(unknownEndpoint)
+// app.use(unknownEndpoint)
 
 const PORT = 3001
 

@@ -1,7 +1,13 @@
 // const http = require('http');
+require('dotenv').config()
+
+// const url = process.env.MONGODB_URI
+// const username = process.env.MONGODB_USERNAME
+// const password = process.env.MONGODB_PASSWORD
 
 const express = require('express')
 const app = express()
+const Note = require('./models/note')
 
 const cors = require('cors')
 app.use(cors())
@@ -10,48 +16,30 @@ app.use(express.json())
 app.use(express.static('build'))
 
 let notes = [
-    {
-      id: 1,
-      content: "HTML is easy",
-      important: true
-    },
-    {
-      id: 2,
-      content: "Browser can execute only JavaScript",
-      important: false
-    },
-    {
-      id: 3,
-      content: "GET and POST are the most important methods of HTTP protocol",
-      important: true
-    }
 ]
 
-// const app = http.createServer((request, response) => {
-//     response.writeHead(200, {'Content-Type': 'application/json'})
-//     response.end(JSON.stringify(notes))
-// })
-
-app.get('/', (request, response) => {
-    response.send('<div>Hello Worl!!!</div>')
-})
 
 app.get('/api/notes', (request, response) => {
-    response.json(notes)
+    Note.find({}).then(notes => {
+      response.json(notes)
+    })
 })
 
 app.get('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  console.log(`Getting resource at this id: ${id}`)
+  const id = request.params.id
+  // console.log(`Getting resource at this id: ${id}`)
 
-  const note = notes.find(note => note.id === id)
+  // const note = notes.find(note => note.id === id)
   
-  if(note){
+  // if(note){
+  //   response.json(note)
+  // }else{
+  //   response.statusMessage = `Your resource at id ${id} was not found`
+  //   response.status(400).end()
+  // }
+  Note.findById(id).then(note => {
     response.json(note)
-  }else{
-    response.statusMessage = `Your resource at id ${id} was not found`
-    response.status(400).end()
-  }
+  })
 })
 
 app.delete('/api/notes/:id', (request, response) => {
@@ -61,34 +49,34 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const generateId = () => {
-  const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)): 0
-  return maxId + 1
-}
+// const generateId = () => {
+//   const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)): 0
+//   return maxId + 1
+// }
 
 app.post('/api/notes', (request, response) => {
   const body = request.body
 
-  if(!body.content){
+  if(body.content === undefined){
     return response.status(400).json({
       error: "Content Missing"
     })
   }
 
-  const note = {
+  const note = new Note({
     content: body.content,
     important: body.important || false,
-    id: generateId(),
-  }
+  })
   
-  notes = notes.concat(note)
-  console.log(note)
-  response.json(note)
+  // notes = notes.concat(note)
+  // console.log(note)
+  // response.json(note)
+  note.save().then(savedNote => {
+    response.json(savedNote)
+  })
 })
 
-
-
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT 
 app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`)
 })

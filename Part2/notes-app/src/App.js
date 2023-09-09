@@ -8,6 +8,7 @@ const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
   // useEffect(() => {
@@ -23,9 +24,10 @@ const App = () => {
   useEffect(() => {
     noteService
     .getAll()
-    .then(initialNotes => {
+    .then((initialNotes) => {
       setNotes(initialNotes)
     })
+    .catch((err) => alert(err))
   }, [])
 
   // console.log('render', notes.length, 'notes')
@@ -87,10 +89,28 @@ const App = () => {
     setNewNote(event.target.value)
   }
 
+  const handleDelete = (id) => {
+    if(window.confirm(`Do you really want to delete this note?`)){
+      noteService
+      .remove(id)
+      .then(() => {
+        setSuccessMessage(`Deleted ${notes.find((note) => note.id === id).name}`)
+        setNotes(notes.filter((note) => note.id !== id))
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 3000)    
+      })
+      .catch((error) => alert(error))
+    }else{
+      return
+    }
+  
+  }
+
   return (
     <div>
       <h1>Notes</h1>
-      <Notification message={errorMessage}/>
+      <Notification successMessage={successMessage} errorMessage={errorMessage}/>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           Show {showAll ? 'important' : 'all'}
@@ -98,7 +118,7 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map(note => 
-          <Note key={note.id} note={note} toggleImportanceOf={() => toggleImportanceOf(note.id)}/>  
+          <Note key={note.id} note={note} toggleImportanceOf={() => toggleImportanceOf(note.id)} handleDelete={handleDelete}/>  
         )}
       </ul>
       <form onSubmit={addNote}>
